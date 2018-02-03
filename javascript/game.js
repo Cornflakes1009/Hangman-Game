@@ -1,7 +1,7 @@
 ////////--------------------------JavaScript--------------------------/////////
 
 // array to pick words from
-var wordsArray = ["China", "Canada", "Germany", "India", "Mexico"];
+var wordsArray = ["china", "canada", "germany", "india", "mexico"];
 
 // array to hold the blank spaces that display on the screen - indexes to be replaced by the correct letters guessed
 var blanksArr = [];
@@ -65,7 +65,7 @@ document.onkeyup = function(event) {
             blanksArr.splice(i, 1, keyPressed);
             // blanksArr[i] = randomWordSelector[i];
             console.log(blanksArr);
-           blanks.innerHTML = event.key;
+           document.querySelector("#blanks").innerHTML = event.key;
         }
     }
 }
