@@ -18,23 +18,38 @@ var randomWordSelector = wordsArray[Math.floor(Math.random() * wordsArray.length
 // displays the keys already typed on the screen
 var alreadyGuessed = document.getElementById("alreadyGuessed");
 
-// function to check the number of indexes in the randomWordSelector and 
-document.onkeydown = function () {
+// variable to track wins
+var wins = 0;
+
+// tracks the number of letter guesses left
+var guessesRemaining = 5;
+
+// tracks the number of characters left in the word
+var lettersToGuessRemaining = randomWordSelector.length;
+
+var correctlyGuessedLetters = 0;
 
 
-}
 // loop through the array and set an underscore and space for every index of the array
-for (var i = 0; i < randomWordSelector.length; i++) {
-    blanksArr.push("_ ");
-}
+function dashSetter() {
+    document.querySelector("#blanks").innerHTML = "";
+    blanksArr = [];
+    for (var i = 0; i < randomWordSelector.length; i++) {
+        blanksArr.push("_ ");
+        // sets the blank spaces on the page - .join removes the commas
+        blanks.innerHTML = blanksArr.join(" "); // removed from 49
+    }
+};
+dashSetter();
 console.log(blanksArr);
 console.log(randomWordSelector);
 
-// sets the blank spaces on the page - .join removes the commas
-blanks.innerHTML = blanksArr.join(" ");
+
 
 // function that runs on press and release of key
-document.onkeydown = function(event) {
+document.onkeydown = function (event) {
+    // displays the letters previously guessed to the screen (sorted without commas)
+    document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
     // creating a variable and assigning it the value of the pressed key
     var keyPressed = event.key;
     // checking if the lettersGuessed array has anything in it and then checking if the key pressed is a-z
@@ -44,60 +59,77 @@ document.onkeydown = function(event) {
         console.log(lettersGuessed);
         console.log("first breakpoint");
         // checking if the key pressed is in the lettersGuessed array and adding if not
-        for(var i = 0; i < randomWordSelector.length; i++) {
-            if(lettersGuessed.indexOf(keyPressed) === -1) {
+        for (var i = 0; i < randomWordSelector.length; i++) {
+            if (lettersGuessed.indexOf(keyPressed) === -1) {
                 lettersGuessed.push(keyPressed);
             }
         }
-        
+
     } else if ((event.keyCode >= 65 && event.keyCode <= 90) && (lettersGuessed.indexOf(keyPressed) === -1)) {
         lettersGuessed.push(keyPressed);
         console.log(lettersGuessed);
         console.log("second breakpoint");
-        }
+    }
 }
 console.log(lettersGuessed);
 
-document.onkeyup = function(event) {
+document.onkeyup = function (event) {
+    // displays the letters previously guessed to the screen (sorted without commas)
+    document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
+    // sets a temporary value for the key pressed
     var keyPressed = event.key;
-    for(var i = 0; i < randomWordSelector.length; i++) {
-        if (keyPressed === randomWordSelector[i]){
+    // checks if the key pressed is in the random word
+    if (randomWordSelector.indexOf(keyPressed) === -1) {
+        // decreases the guesses if the letter isn't in random word
+        guessesRemaining--;
+    }
+    //  else {
+    //     correctlyGuessedLetters++;
+    // }
+    // if (correctlyGuessedLetters >= blanksArr.lenth) {
+    //     alert("You win! a vacation");
+    // }
+
+    // loops through the the randomly selected word to see if any of the indexes match the key pressed
+    for (var i = 0; i < randomWordSelector.length; i++) {
+        // checks the key against the indexes
+        if (keyPressed === randomWordSelector[i]) {
+            // replaces the index in the blanks array with the key that was typed in
             blanksArr.splice(i, 1, keyPressed);
-            // blanksArr[i] = randomWordSelector[i];
-            console.log(blanksArr);
-           document.querySelector("#blanks").innerHTML = event.key;
+            // sets the HTML to show the correctly typed letters in the blanks
+            document.querySelector("#blanks").innerHTML = blanksArr.join(" ");
+
+
+        } else {
+            // decreases the numbers of guesses - condition to end the game
+
+        }
+    }
+  
+    console.log(blanksArr);
+    // checks if there are any guesses left
+    if (guessesRemaining <= 0) {
+        dashSetter();
+        // alerts that the player is all out of guesses
+        alert("Sorry, you're all out of guesses. The word was " + randomWordSelector.toUpperCase() + " Please try again.");
+        guessesRemaining = 10;
+        randomWordSelector = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+        console.log(randomWordSelector);
+        
+        // checks if the guesses remaining is greater than 0
+    } else if (guessesRemaining > 0) {
+        console.log("got to the last part of the code");
+        for (var i = 0; i < blanksArr; i++) {
+            if (blanksArr.indexOf("_ ") === -1) {
+                // alerts the player that they won
+                alert("You won! Congratulations!");
+                // increments the win counter by 1
+                wins++;
+                document.querySelector("#score").innerHTML = wins;
+            }
+
+
         }
     }
 }
-////// - copied over from the character-pressed.html
-// document.onkeyup = function (event) {
-//     // takes the key typed and changes the html to show what key was typed
-//     alreadyGuessed.textContent = event.key;
-    
-//     // checks the key typed that it is a-z at the lowercase value
-//     if ((event.key.toLowerCase() === "a") || (event.key.toLowerCase() === "b") || (event.key.toLowerCase() === "c") || (event.key.toLowerCase() === "d") || (event.key.toLowerCase() === "e") || (event.key.toLowerCase() === "f") || (event.key.toLowerCase() === "g") || (event.key.toLowerCase() === "h") || (event.key.toLowerCase() === "i") || (event.key.toLowerCase() === "a") || (event.key.toLowerCase() === "j") || (event.key.toLowerCase() === "k") || (event.key.toLowerCase() === "l") || (event.key.toLowerCase() === "m") || (event.key.toLowerCase() === "n") || (event.key.toLowerCase() === "o") || (event.key.toLowerCase() === "p") || (event.key.toLowerCase() === "q") || (event.key.toLowerCase() === "r") || (event.key.toLowerCase() === "s") || (event.key.toLowerCase() === "t") || (event.key.toLowerCase() === "u") || (event.key === "v") || (event.key.toLowerCase() === "w") || (event.key.toLowerCase() === "x") || (event.key.toLowerCase() === "y") || (event.key.toLowerCase() === "z")) {
-//         if(lettersGuessed.length = 0) {
-//             lettersGuessed.push("H");
-//         } 
-    
-//         //     for (var i = 0; i < lettersAlreadyGuessed.length; i++) {
-//     //         if (event.key !== lettersAlreadyGuessed[i]) {
-//     //            var add = lettersAlreadyGuessed.push(event.key);
-//     //         } 
-//     //     }
-//     // } else if (((event.key.toLowerCase() === "a") || (event.key.toLowerCase() === "b") || (event.key.toLowerCase() === "c") || (event.key.toLowerCase() === "d") || (event.key.toLowerCase() === "e") || (event.key.toLowerCase() === "f") || (event.key.toLowerCase() === "g") || (event.key.toLowerCase() === "h") || (event.key.toLowerCase() === "i") || (event.key.toLowerCase() === "a") || (event.key.toLowerCase() === "j") || (event.key.toLowerCase() === "k") || (event.key.toLowerCase() === "l") || (event.key.toLowerCase() === "m") || (event.key.toLowerCase() === "n") || (event.key.toLowerCase() === "o") || (event.key.toLowerCase() === "p") || (event.key.toLowerCase() === "q") || (event.key.toLowerCase() === "r") || (event.key.toLowerCase() === "s") || (event.key.toLowerCase() === "t") || (event.key.toLowerCase() === "u") || (event.key === "v") || (event.key.toLowerCase() === "w") || (event.key.toLowerCase() === "x") || (event.key.toLowerCase() === "y") || (event.key.toLowerCase() === "z")) && (lettersAlreadyGuessed.length = 0)) {
-//     //     var add = lettersAlreadyGuessed.push(event.key);
-//     // }
-//     // // logs the keys previously typed to the console in an array
-//     // console.log(lettersAlreadyGuessed);
 
-//     // for (var i = 0; i < lettersAlreadyGuessed.length; i++) {
-//     //     if (event.key !== lettersAlreadyGuessed[i]) {
-//     //         // changes the html to show what keys were already typed
-//     //         alreadyGuessed.textContent = lettersAlreadyGuessed;
-//     //     }
-//     }
-//     console.log(event.key);
-//     console.log(lettersGuessed);
-// };
-// console.log(lettersGuessed.length);
