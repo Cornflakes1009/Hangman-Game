@@ -122,14 +122,19 @@ document.onkeypress = function (event) {
         if (blanksArr.indexOf("_ ") === -1) {
             if(randomWordSelector === "mexico") {
                 mexicoAnthem.play();
+                document.getElementById("flags").src = "assets/images/mexico-flag.jpg";
             } else if (randomWordSelector === "china") {
                 chineseAnthem.play();
+                document.getElementById("flags").src = "assets/images/china-flag.jpg";
             } else if (randomWordSelector === "germany") {
                 germanyAnthem.play();
+                document.getElementById("flags").src = "assets/images/germany-flag.gif";
             } else if (randomWordSelector === "india") {
                 indiaAnthem.play();
+                document.getElementById("flags").src = "assets/images/india-flag.jpeg";
             } else {
                 canadaAnthem.play();
+                document.getElementById("flags").src = "assets/images/canada-flag.jpg";
             }
             // alerts the player that they won
             alert("You won! You're going to " + randomWordSelector.toUpperCase() + "! Congratulations! Please stay on the line so we can get your info.");
