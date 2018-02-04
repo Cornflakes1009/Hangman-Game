@@ -1,24 +1,36 @@
 ////////--------------------------JavaScript--------------------------/////////
+
 // array to pick words from
 var wordsArray = ["china", "canada", "germany", "india", "mexico"];
+
 // array to hold the blank spaces that display on the screen - indexes to be replaced by the correct letters guessed
 var blanksArr = [];
+
 // id for for setting the blanks on the div in the html
 var blanks = document.getElementById("blanks");
+
 // array to hold the letters already guessed (including the ones correctly guessed) - better if sorted
 var lettersGuessed = [];
+
 // picks a random item from the wordsArray
 var randomWordSelector = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+
 // displays the keys already typed on the screen
 var alreadyGuessed = document.getElementById("alreadyGuessed");
+
 // variable to track wins
 var wins = 0;
+
 // tracks the number of letter guesses left
 var guessesRemaining = 5;
+
 var numGuessesRemaining = document.getElementById("numGuessesRemaining");
+
 // tracks the number of characters left in the word
 var lettersToGuessRemaining = randomWordSelector.length;
+
 var correctlyGuessedLetters = 0;
+
 var mexicoAnthem = new Audio("assets/audio/mexico-anthem.mp3");
 var chineseAnthem = new Audio("assets/audio/chinese-anthem.mp3");
 var germanyAnthem = new Audio("assets/audio/germany-anthem.mp3");
@@ -26,18 +38,12 @@ var indiaAnthem = new Audio("assets/audio/india-anthem.mp3");
 var canadaAnthem = new Audio("assets/audio/canada-anthem.mp3");
 // loop through the array and set an underscore and space for every index of the array
 function dashSetter() {
-    germanyAnthem.pause();
-    indiaAnthem.pause();
-    canadaAnthem.pause();
-    chineseAnthem.pause();
-    mexicoAnthem.pause();
     document.querySelector("#blanks").innerHTML = "";
     document.querySelector("#alreadyGuessed").innerHTML = "";
+    document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
     blanksArr = [];
     lettersGuessed = [];
-    randomWordSelector = wordsArray[Math.floor(Math.random() * wordsArray.length)];
-    guessesRemaining = 5;
-    document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
+    // guessesRemaining = 5;
     for (var i = 0; i < randomWordSelector.length; i++) {
         blanksArr.push("_ ");
         // sets the blank spaces on the page - .join removes the commas
@@ -49,8 +55,11 @@ console.log(blanksArr);
 console.log(randomWordSelector);
 document.querySelector("#score").innerHTML = wins;
 document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
+
+
 // function that runs on press and release of key
 document.onkeyup = function (event) {
+
     // displays the guesses remaining on the screen
     document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
     // creating a variable and assigning it the value of the pressed key
@@ -67,6 +76,7 @@ document.onkeyup = function (event) {
                 lettersGuessed.push(keyPressed);
             }
         }
+
     } else if ((event.keyCode >= 65 && event.keyCode <= 90) && (lettersGuessed.indexOf(keyPressed) === -1)) {
         lettersGuessed.push(keyPressed);
         console.log(lettersGuessed);
@@ -74,11 +84,14 @@ document.onkeyup = function (event) {
     }
     document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
 }
- // displays the letters previously guessed to the screen (sorted without commas) - moved from 62/63
+// displays the letters previously guessed to the screen (sorted without commas) - moved from 62/63
+
 console.log(lettersGuessed);
+
 document.onkeypress = function (event) {
     // sets the guesses remaining on the screen
     document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
+
     // sets a temporary value for the key pressed
     var keyPressed = event.key;
     // checks if the key pressed is in the random word
@@ -95,9 +108,10 @@ document.onkeypress = function (event) {
             // sets the HTML to show the correctly typed letters in the blanks
             document.querySelector("#blanks").innerHTML = blanksArr.join(" ");
         }
-            document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
+        // displays the letters previously guessed to the screen (sorted without commas) - moved from 92/93
+        document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
     }
-    // displays the letters previously guessed to the screen (sorted without commas) - moved from 92/93
+
     // checks if there are any guesses left
     if (guessesRemaining <= 0) {
         // had dashSetter() here - moved down due to unexpected behavior
@@ -110,7 +124,7 @@ document.onkeypress = function (event) {
         // checks if the guesses remaining is greater than 0
     } else if (guessesRemaining > 0) {
         if (blanksArr.indexOf("_ ") === -1) {
-            if(randomWordSelector === "mexico") {
+            if (randomWordSelector === "mexico") {
                 mexicoAnthem.play();
                 document.getElementById("flags").src = "assets/images/mexico-flag.jpg";
             } else if (randomWordSelector === "china") {
@@ -134,5 +148,9 @@ document.onkeypress = function (event) {
             document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
             dashSetter();
         }
+
+
+
     }
 }
+
