@@ -24,16 +24,26 @@ var wins = 0;
 // tracks the number of letter guesses left
 var guessesRemaining = 5;
 
+var numGuessesRemaining = document.getElementById("numGuessesRemaining");
+
 // tracks the number of characters left in the word
 var lettersToGuessRemaining = randomWordSelector.length;
 
 var correctlyGuessedLetters = 0;
 
-
+var mexicoAnthem = new Audio("assets/audio/mexico-anthem.mp3");
+var chineseAnthem = new Audio("assets/audio/chinese-anthem.mp3");
+var germanyAnthem = new Audio("assets/audio/germany-anthem.mp3");
+var indiaAnthem = new Audio("assets/audio/india-anthem.mp3");
+var canadaAnthem = new Audio("assets/audio/canada-anthem.mp3");
 // loop through the array and set an underscore and space for every index of the array
 function dashSetter() {
     document.querySelector("#blanks").innerHTML = "";
+    document.querySelector("#alreadyGuessed").innerHTML = "";
+    document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
     blanksArr = [];
+    lettersGuessed = [];
+    // guessesRemaining = 5;
     for (var i = 0; i < randomWordSelector.length; i++) {
         blanksArr.push("_ ");
         // sets the blank spaces on the page - .join removes the commas
@@ -43,13 +53,16 @@ function dashSetter() {
 dashSetter();
 console.log(blanksArr);
 console.log(randomWordSelector);
-
+document.querySelector("#score").innerHTML = wins;
+document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
 
 
 // function that runs on press and release of key
-document.onkeydown = function (event) {
+document.onkeyup = function (event) {
     // displays the letters previously guessed to the screen (sorted without commas)
     document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
+    // displays the guesses remaining on the screen
+    document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
     // creating a variable and assigning it the value of the pressed key
     var keyPressed = event.key;
     // checking if the lettersGuessed array has anything in it and then checking if the key pressed is a-z
@@ -73,7 +86,9 @@ document.onkeydown = function (event) {
 }
 console.log(lettersGuessed);
 
-document.onkeyup = function (event) {
+document.onkeypress = function (event) {
+    // sets the guesses remaining on the screen
+    document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
     // displays the letters previously guessed to the screen (sorted without commas)
     document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
     // sets a temporary value for the key pressed
@@ -83,13 +98,6 @@ document.onkeyup = function (event) {
         // decreases the guesses if the letter isn't in random word
         guessesRemaining--;
     }
-    //  else {
-    //     correctlyGuessedLetters++;
-    // }
-    // if (correctlyGuessedLetters >= blanksArr.lenth) {
-    //     alert("You win! a vacation");
-    // }
-
     // loops through the the randomly selected word to see if any of the indexes match the key pressed
     for (var i = 0; i < randomWordSelector.length; i++) {
         // checks the key against the indexes
@@ -98,38 +106,42 @@ document.onkeyup = function (event) {
             blanksArr.splice(i, 1, keyPressed);
             // sets the HTML to show the correctly typed letters in the blanks
             document.querySelector("#blanks").innerHTML = blanksArr.join(" ");
-
-
-        } else {
-            // decreases the numbers of guesses - condition to end the game
-
         }
     }
-  
-    console.log(blanksArr);
     // checks if there are any guesses left
     if (guessesRemaining <= 0) {
-        dashSetter();
+        // had dashSetter() here - moved down due to unexpected behavior
         // alerts that the player is all out of guesses
-        alert("Sorry, you're all out of guesses. The word was " + randomWordSelector.toUpperCase() + " Please try again.");
+        alert("Sorry, you're all out of guesses. The word was " + randomWordSelector.toUpperCase() + " Please play again for your chance to win a trip.");
         guessesRemaining = 10;
         randomWordSelector = wordsArray[Math.floor(Math.random() * wordsArray.length)];
         console.log(randomWordSelector);
-        
+        dashSetter();
         // checks if the guesses remaining is greater than 0
     } else if (guessesRemaining > 0) {
-        console.log("got to the last part of the code");
-        for (var i = 0; i < blanksArr; i++) {
-            if (blanksArr.indexOf("_ ") === -1) {
-                // alerts the player that they won
-                alert("You won! Congratulations!");
-                // increments the win counter by 1
-                wins++;
-                document.querySelector("#score").innerHTML = wins;
+        if (blanksArr.indexOf("_ ") === -1) {
+            if(randomWordSelector === "mexico") {
+                mexicoAnthem.play();
+            } else if (randomWordSelector === "china") {
+                chineseAnthem.play();
+            } else if (randomWordSelector === "germany") {
+                germanyAnthem.play();
+            } else if (randomWordSelector === "india") {
+                indiaAnthem.play();
+            } else {
+                canadaAnthem.play();
             }
-
-
+            // alerts the player that they won
+            alert("You won! You're going to " + randomWordSelector.toUpperCase() + "! Congratulations! Please stay on the line so we can get your info.");
+            // increments the win counter by 1
+            wins++;
+            document.querySelector("#score").innerHTML = wins;
+            document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
+            dashSetter();
         }
+
+
+
     }
 }
 

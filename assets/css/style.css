@@ -1,0 +1,39 @@
+body {
+    background-image: url("background-image.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: white;
+    font-size: 24px;
+}
+
+h1 {
+    font-size: 60px;
+    padding: 50px 0px;
+    text-shadow: 4px 4px darkblue;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+    background-color: black;
+    opacity: .25;
+}
+
+.back-drop {
+    background-color: rgb(122, 175, 193);
+}
+.everyoneGetsABorder {
+    border: 1px solid darkblue;
+}
+.center-image {
+    
+    width: 80%;
+    display: block;
+    
+    margin: auto;
+}
