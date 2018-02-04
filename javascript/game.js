@@ -59,8 +59,7 @@ document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
 
 // function that runs on press and release of key
 document.onkeyup = function (event) {
-    // displays the letters previously guessed to the screen (sorted without commas)
-    document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
+   
     // displays the guesses remaining on the screen
     document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
     // creating a variable and assigning it the value of the pressed key
@@ -84,13 +83,14 @@ document.onkeyup = function (event) {
         console.log("second breakpoint");
     }
 }
+ // displays the letters previously guessed to the screen (sorted without commas) - moved from 62/63
+ document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
 console.log(lettersGuessed);
 
 document.onkeypress = function (event) {
     // sets the guesses remaining on the screen
     document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
-    // displays the letters previously guessed to the screen (sorted without commas)
-    document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
+    
     // sets a temporary value for the key pressed
     var keyPressed = event.key;
     // checks if the key pressed is in the random word
@@ -108,6 +108,8 @@ document.onkeypress = function (event) {
             document.querySelector("#blanks").innerHTML = blanksArr.join(" ");
         }
     }
+    // displays the letters previously guessed to the screen (sorted without commas) - moved from 92/93
+    document.querySelector("#alreadyGuessed").innerHTML = lettersGuessed.sort().join(" ");
     // checks if there are any guesses left
     if (guessesRemaining <= 0) {
         // had dashSetter() here - moved down due to unexpected behavior
@@ -144,7 +146,7 @@ document.onkeypress = function (event) {
             document.querySelector("#numGuessesRemaining").innerHTML = guessesRemaining;
             dashSetter();
         }
-
+        
 
 
     }
